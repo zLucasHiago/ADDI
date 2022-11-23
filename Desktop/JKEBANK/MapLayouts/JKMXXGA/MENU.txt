@@ -1,0 +1,24 @@
+                                                                                
+                                                                                
+                        JK ENTERPRISES BANK                                     
+                                                                                
+                       CUSTOMER ACCOUNT MENU                                    
+                                                                                
+                                                                                
+                     Select an account function,                                
+                            1 - Open  _                                         
+                            2 - View                                            
+                            3 - Update                                          
+                                                                                
+                                                                                
+                      provide an acount number,                                 
+                       Account number: ______                                   
+                                                                                
+                       and press Enter                                          
+                                                                                
+                                                                                
+                                                                                
+         Press CLEAR to exit this screen                                        
+                                                                                
+                                                                                
+                                                                                

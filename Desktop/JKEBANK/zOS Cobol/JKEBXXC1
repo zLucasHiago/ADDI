@@ -1,0 +1,96 @@
+      *****************************************************************         
+      * Licensed Materials - Property of IBM                          *         
+      *                                                               *         
+      * JKEBXXC1.cbl                                                  *         
+      *                                                               *         
+      * B) Copyright IBM Corporation 2012                              *        
+      * U.S. Government Users Restricted Rights:  Use, duplication    *         
+      * or disclosure                                                 *         
+      * restricted by GSA ADP Schedule Contract with IBM Corp.        *         
+      *                                                               *         
+      *                                                               *         
+      * CBL CICS('COBOL3')                                            *         
+      * PROCESS APOST TRUNC(BIN) NOSSRANGE SIZE(4000K) TEST           *         
+      *****************************************************************         
+      * This program  call C2 via transaction that invokes S1 via link          
+      *****************************************************************         
+       IDENTIFICATION DIVISION.                                                 
+       PROGRAM-ID. JKEBXXC1.                                                    
+       ENVIRONMENT DIVISION.                                                    
+       DATA DIVISION.                                                           
+       WORKING-STORAGE SECTION.                                                 
+       77  MESSAGES     PIC X(39).                                              
+       77  RESPONSE     PIC 9(9)  COMP.                                         
+       01 STARTING-TRAN.                                                        
+          05 FILLER   PIC X(2).                                                 
+          05 TEAMID  PIC X(2).                                                  
+       01 CONSTANTS.                                                            
+          05 MENU-TRAN  PIC X(4) VALUE 'JKEM'.                                  
+          05 CRUD-TRAN  PIC X(4) VALUE 'JKED'.                                  
+          05 MENU-MAPS  PIC X(8) VALUE 'JKMXXGA '.                              
+                                                                                
+              COPY JKMXXGA.                                                     
+              COPY DFHBMSCA.                                                    
+              COPY DFHAID.                                                      
+       01  LINK-AREA.                                                           
+           05  LINKA.    COPY JKEBLINK.                                         
+       PROCEDURE DIVISION.                                                      
+           EXEC CICS HANDLE CONDITION ERROR(ERRORS) END-EXEC.                   
+           IF EIBAID = DFHCLEAR  OR DFHPF3 THEN                                 
+               EXEC CICS RETURN END-EXEC.                                       
+      * EXTRACT TEAMID FROM STARTING TRANSACTION                                
+           MOVE EIBTRNID TO STARTING-TRAN.                                      
+           MOVE TEAMID IN STARTING-TRAN TO TEAMID IN LINKA.                     
+                                                                                
+           EXEC CICS RECEIVE MAP('MENU') MAPSET(MENU-MAPS)                      
+                     RESP(RESPONSE) END-EXEC.                                   
+           IF RESPONSE NOT = DFHRESP(NORMAL) THEN GO TO CHECK-RESP.             
+      * CHECK FOR VALID FUNCTION AND ACCOUNT NUMBER                             
+           EVALUATE TRUE                                                        
+             WHEN FUNCTIONI = '1'                                               
+               SET ACCOUNT-OPEN TO TRUE                                         
+             WHEN FUNCTIONI = '2'                                               
+               SET ACCOUNT-VIEW TO TRUE                                         
+             WHEN FUNCTIONI = '3'                                               
+               SET ACCOUNT-CHANGE TO TRUE                                       
+             WHEN FUNCTIONI = '4'                                               
+               SET ACCOUNT-CLOSE TO TRUE                                        
+             WHEN OTHER                                                         
+               MOVE 'INVALID FUNCTION' TO MESSAGES                              
+               GO TO MENU.                                                      
+           MOVE SPACE TO SERVER-REQUEST.                                        
+           IF KEYL = ZERO                                                       
+                THEN GO TO BADLENG.                                             
+           IF KEYI NOT NUMERIC                                                  
+                THEN GO TO BADCHARS.                                            
+           MOVE KEYI TO KEYNUM.                                                 
+           EXEC CICS RETURN TRANSID(CRUD-TRAN) IMMEDIATE                        
+                      COMMAREA(LINKA) END-EXEC.                                 
+           GOBACK.                                                              
+                                                                                
+       MENU.                                                                    
+      *                                                                         
+           MOVE LOW-VALUE TO MENUO.                                             
+           MOVE DFHBMASB  TO MSGA.                                              
+           MOVE MESSAGES  TO MSGO.                                              
+      *                                                                         
+           EXEC CICS SEND MAP('MENU') MAPSET(MENU-MAPS)                         
+                     ERASE END-EXEC.                                            
+      *                                                                         
+           EXEC CICS RETURN TRANSID(EIBTRNID) END-EXEC.                         
+       CHECK-RESP.                                                              
+           IF RESPONSE = DFHRESP(MAPFAIL) THEN                                  
+                 MOVE 'PRESS CLEAR TO EXIT' TO MESSAGES                         
+                 GO TO MENU                                                     
+           ELSE                                                                 
+              MOVE 'TRANSACTION TERMINATED' TO MESSAGES                         
+              GO TO MENU.                                                       
+       BADLENG.                                                                 
+           MOVE 'PLEASE ENTER AN ACCOUNT NUMBER' TO MESSAGES.                   
+           GO TO MENU.                                                          
+       BADCHARS.                                                                
+           MOVE 'ACCOUNT NUMBER MUST BE NUMERIC' TO MESSAGES.                   
+           GO TO MENU.                                                          
+       ERRORS.                                                                  
+           MOVE 'ERROR. TRANSACTION TERMINATED' TO MESSAGES.                    
+           GO TO MENU.                                                          

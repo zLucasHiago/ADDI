@@ -1,0 +1,60 @@
+       01  JKEMAINI.                                                            
+           02  FILLER PIC X(12).                                                
+           02  USERNAMEL    COMP  PIC  S9(4).                                   
+           02  USERNAMEF    PICTURE X.                                          
+           02  FILLER REDEFINES USERNAMEF.                                      
+             03 USERNAMEA    PICTURE X.                                         
+           02  FILLER   PICTURE X(6).                                           
+           02  USERNAMEI  PIC X(8).                                             
+           02  USERPWDL    COMP  PIC  S9(4).                                    
+           02  USERPWDF    PICTURE X.                                           
+           02  FILLER REDEFINES USERPWDF.                                       
+             03 USERPWDA    PICTURE X.                                          
+           02  FILLER   PICTURE X(6).                                           
+           02  USERPWDI  PIC X(8).                                              
+           02  JKECMDL    COMP  PIC  S9(4).                                     
+           02  JKECMDF    PICTURE X.                                            
+           02  FILLER REDEFINES JKECMDF.                                        
+             03 JKECMDA    PICTURE X.                                           
+           02  FILLER   PICTURE X(6).                                           
+           02  JKECMDI  PIC X(2).                                               
+           02  ERRMSGL    COMP  PIC  S9(4).                                     
+           02  ERRMSGF    PICTURE X.                                            
+           02  FILLER REDEFINES ERRMSGF.                                        
+             03 ERRMSGA    PICTURE X.                                           
+           02  FILLER   PICTURE X(6).                                           
+           02  ERRMSGI  PIC X(39).                                              
+       01  JKEMAINO REDEFINES JKEMAINI.                                         
+           02  FILLER PIC X(12).                                                
+           02  FILLER PICTURE X(3).                                             
+           02  USERNAMEC    PICTURE X.                                          
+           02  USERNAMEP    PICTURE X.                                          
+           02  USERNAMEH    PICTURE X.                                          
+           02  USERNAMEV    PICTURE X.                                          
+           02  USERNAMEU    PICTURE X.                                          
+           02  USERNAMEM    PICTURE X.                                          
+           02  USERNAMEO  PIC X(8).                                             
+           02  FILLER PICTURE X(3).                                             
+           02  USERPWDC    PICTURE X.                                           
+           02  USERPWDP    PICTURE X.                                           
+           02  USERPWDH    PICTURE X.                                           
+           02  USERPWDV    PICTURE X.                                           
+           02  USERPWDU    PICTURE X.                                           
+           02  USERPWDM    PICTURE X.                                           
+           02  USERPWDO  PIC X(8).                                              
+           02  FILLER PICTURE X(3).                                             
+           02  JKECMDC    PICTURE X.                                            
+           02  JKECMDP    PICTURE X.                                            
+           02  JKECMDH    PICTURE X.                                            
+           02  JKECMDV    PICTURE X.                                            
+           02  JKECMDU    PICTURE X.                                            
+           02  JKECMDM    PICTURE X.                                            
+           02  JKECMDO  PIC X(2).                                               
+           02  FILLER PICTURE X(3).                                             
+           02  ERRMSGC    PICTURE X.                                            
+           02  ERRMSGP    PICTURE X.                                            
+           02  ERRMSGH    PICTURE X.                                            
+           02  ERRMSGV    PICTURE X.                                            
+           02  ERRMSGU    PICTURE X.                                            
+           02  ERRMSGM    PICTURE X.                                            
+           02  ERRMSGO  PIC X(39).                                              

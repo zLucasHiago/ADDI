@@ -1,0 +1,124 @@
+      *****************************************************************         
+      * Licensed Materials - Property of IBM                          *         
+      *                                                               *         
+      * JKEBXXS1.cbl                                                  *         
+      *                                                               *         
+      * B) Copyright IBM Corporation 2012                              *        
+      * U.S. Government Users Restricted Rights:  Use, duplication    *         
+      * or disclosure                                                 *         
+      * restricted by GSA ADP Schedule Contract with IBM Corp.        *         
+      *                                                               *         
+      *                                                               *         
+      *****************************************************************         
+                                                                                
+       IDENTIFICATION DIVISION.                                                 
+       PROGRAM-ID. JKEBXXS1.                                                    
+       ENVIRONMENT DIVISION.                                                    
+       DATA DIVISION.                                                           
+       WORKING-STORAGE SECTION.                                                 
+       77  RESPONSE     PIC 9(9)  COMP.                                         
+      *                                                                         
+      *    NEXT FIELD TO VERIFY AMOUNTI                                         
+      *                                                                         
+       01  AMOUNTN.                                                             
+           03  AMOUNTN1  PIC X.                                                 
+           03  AMOUNTN25 PIC X(4).                                              
+           03  AMOUNTN6  PIC X.                                                 
+           03  AMOUNTN78 PIC X(2).                                              
+       01  FILEA-TEMP.       COPY JKEBACCT.                                     
+       01  LOGA.        COPY JKEBLOG.                                           
+       LINKAGE SECTION.                                                         
+       01  DFHCOMMAREA.                                                         
+           05  LINK.      COPY JKEBLINK.                                        
+      *     05  FILLER.      COPY JKEBLINK.                                     
+           05  FILEA.       COPY JKEBACCT.                                      
+           05  COMM-AREA.    COPY JKEBACCT.                                     
+                                                                                
+       PROCEDURE DIVISION.                                                      
+       MAINLINE.                                                                
+           MOVE ZERO TO RCODE.                                                  
+           EVALUATE TRUE                                                        
+              WHEN ACCOUNT-READ PERFORM READ-FILEA                              
+              WHEN ACCOUNT-UPDATE PERFORM UPDATE-FILEA                          
+                 THRU UPDATE-FILEA-EXIT                                         
+              WHEN ACCOUNT-CREATE PERFORM ADD-FILEA                             
+              WHEN OTHER MOVE 99 TO RCODE.                                      
+           EXEC CICS RETURN END-EXEC.                                           
+      *                                                                         
+       READ-FILEA.                                                              
+           EXEC CICS READ FILE('FILEA') INTO(FILEA)                             
+                   RIDFLD(KEYNUM) RESP(RESPONSE) END-EXEC.                      
+           MOVE RESPONSE TO RCODE.                                              
+      *    FOR AN UPDATE, THE FILE RECORD IS SAVED IN COMM-AREA                 
+      *    TO COMPARE LATER                                                     
+      *                                                                         
+           IF ACCOUNT-CHANGE THEN                                               
+              MOVE FILEREC IN FILEA TO FILEREC IN COMM-AREA.                    
+                                                                                
+                                                                                
+       UPDATE-FILEA.                                                            
+      *                                                                         
+      *       IF THIS IS AN UPDATE REQUEST A FILE CONTROL "READ UPDATE"         
+      *       READS THE EXISTING RECORD USING THE NUMBER STORED IN              
+      *       "COMMAREA" BY THE LAST INVOCATION OF THIS PROGRAM.                
+      *                                                                         
+           EXEC CICS READ UPDATE FILE('FILEA') INTO(FILEA-TEMP)                 
+                   RIDFLD(NUMB IN COMM-AREA)                                    
+                   RESP(RESPONSE)  END-EXEC.                                    
+              IF RESPONSE NOT = DFHRESP(NORMAL)                                 
+                  THEN MOVE RESPONSE TO RCODE                                   
+                  GO TO UPDATE-FILEA-EXIT.                                      
+      *                                                                         
+      *       IF THE CURRENT FILE RECORD IS NOT THE SAME AS THE ONE             
+      *       SAVED IN THE "COMMAREA" THEN ANOTHER USER HAS UPDATED THE         
+      *       RECORD. A WARNING MESSAGE IS DISPLAYED, WITH FIELDS FROM          
+      *       THE RECORD READ FROM "FILEA", FOR REENTRY OF THE                  
+      *       UPDATES.                                                          
+      *                                                                         
+              IF FILEREC IN FILEA-TEMP NOT = FILEREC IN COMM-AREA               
+              THEN MOVE 98 TO RCODE                                             
+                MOVE FILEREC IN FILEA TO FILEREC IN COMM-AREA                   
+                 GO TO UPDATE-FILEA-EXIT.                                       
+      *                                                                         
+       REWRITE-FILEA.                                                           
+      *       FOR AN UPDATE REQUEST THE UPDATED ACCOUNT RECORD IS               
+      *       REWRITTEN TO "FILEA".                                             
+      *                                                                         
+              EXEC CICS REWRITE FILE('FILEA') FROM(FILEA)                       
+                        RESP(RESPONSE) END-EXEC                                 
+              IF RESPONSE NOT = DFHRESP(NORMAL)                                 
+                  THEN MOVE RESPONSE TO RCODE                                   
+                       GO TO UPDATE-FILEA-EXIT                                  
+                 ELSE PERFORM LOG-WRITE.                                        
+      *                                                                         
+       UPDATE-FILEA-EXIT.                                                       
+           EXIT.                                                                
+      *                                                                         
+                                                                                
+       LOG-WRITE.                                                               
+      *                                                                         
+      *    THE RECORD FIELDS, THE DATE, THE TIME, AND THE TERMINAL              
+      *    IDENTIFICATION ARE MOVED TO UPDATE THE LOG RECORD AREA.              
+      *                                                                         
+           MOVE EIBDATE TO LDAY.                                                
+           MOVE FILEREC IN FILEA TO LOGREC.                                     
+           MOVE EIBTIME TO LTIME.                                               
+           MOVE EIBTRMID TO LTERML.                                             
+      *                                                                         
+      *    THE RECORD IS WRITTEN TO THE UPDATE LOG WHICH IS A TRANSIENT         
+      *    DATA QUEUE.                                                          
+      *                                                                         
+           EXEC CICS WRITEQ TD QUEUE('LOGA') FROM(LOGA) LENGTH(92)              
+                     END-EXEC.                                                  
+      *                                                                         
+      *                                                                         
+       ADD-FILEA.                                                               
+      *       TRANSACTION IS 'ADDS'. FOR AN ADD REQUEST THE NEW ACCOUNT         
+      *       RECORD IS WRITTEN TO "FILEA".                                     
+      *                                                                         
+              EXEC CICS WRITE FILE('FILEA') FROM(FILEA)                         
+                   RIDFLD(NUMB IN FILEA) RESP(RESPONSE) END-EXEC.               
+              IF RESPONSE NOT = DFHRESP(NORMAL)                                 
+                  THEN MOVE RESPONSE TO RCODE.                                  
+      *                                                                         
+           GOBACK.                                                              

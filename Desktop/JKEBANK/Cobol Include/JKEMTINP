@@ -1,0 +1,19 @@
+      *****************************************************************         
+      *                                                               *         
+      * Licensed Materials - Property of IBM                          *         
+      *                                                               *         
+      * JKEMTINP.cpy                                                  *         
+      *                                                               *         
+      * ) Copyright IBM Corporation 2012                              *         
+      * U.S. Government Users Restricted Rights:                      *         
+      *      Use, duplication or disclosure                           *         
+      *      restricted by GSA ADP Schedule Corp.                     *         
+      *                                                               *         
+      *****************************************************************         
+                                                                                
+      * INPUT                                                                   
+          03 JKEPCOM-PRINCIPLE-DATA        PIC S9(9)V99 COMP.                   
+          03 JKEPCOM-NUMBER-OF-YEARS       PIC S9(4)    COMP.                   
+          03 JKEPCOM-NUMBER-OF-MONTHS      PIC S9(4)    COMP.                   
+          03 JKEPCOM-QUOTED-INTEREST-RATE  PIC S9(2)v9(3) COMP.                 
+          03 JKEPCOM-YEAR-MONTH-IND        PIC X.                               

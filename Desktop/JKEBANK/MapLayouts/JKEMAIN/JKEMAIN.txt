@@ -1,0 +1,24 @@
+                                                                                
+                        JKE BANKING APPLICATION                                 
+                                                                                
+                                                                                
+            Enter your user name and password and select an option.             
+                                                                                
+            User Name:       ________                                           
+            User Password:   ________                                           
+                                                                                
+                  Select a service:    __                                       
+                                                                                
+                    1. Money That Matters                                       
+                                                                                
+                    2. Account Services                                         
+                                                                                
+                    3. Mortgage Services                                        
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                       Hit ENTER to continue                                    
+                                                                                
+              _______________________________________                           
+                                                                                

@@ -1,0 +1,100 @@
+      *****************************************************************         
+      * Licensed Materials - Property of IBM                          *         
+      *                                                               *         
+      * JKECMAIN.cbl                                                  *         
+      *                                                               *         
+      * B) Copyright IBM Corporation 2012                              *        
+      * U.S. Government Users Restricted Rights:  Use, duplication    *         
+      * or disclosure                                                 *         
+      * restricted by GSA ADP Schedule Contract with IBM Corp.        *         
+      *                                                               *         
+      *                                                               *         
+      *****************************************************************         
+                                                                                
+       ID DIVISION.                                                             
+       PROGRAM-ID. JKECMAIN.                                                    
+      *                                                                         
+      *    MAIN MONEY-THAT-MATTERS APPLICATION WITH THE FOLLOWING               
+      *    OPTIONS:                                                             
+      *        1) MONEY-THAT-MATTERS (DUMMY OPTION)                             
+      *        2) ACCOUNT MANAGEMENT SERVICES                                   
+      *        3) MORTGAGE SERVICES                                             
+      *    THIS PROGRAM INVOKES THE JKES                                        
+       ENVIRONMENT DIVISION.                                                    
+       DATA DIVISION.                                                           
+       WORKING-STORAGE SECTION.                                                 
+       77  MESSAGES     PIC X(39).                                              
+       77  RESPONSE     PIC 9(9)  COMP.    
+       77  DATE-IN-PROGRAM PIC 9(8).	   
+       01 STARTING-TRAN.                                                        
+          05 FILLER   PIC X(2).                                                 
+          05 TEAMID  PIC X(2).                                                  
+                                                                                
+       COPY JKEMAIN.                                                            
+       COPY DFHBMSCA.                                                           
+       COPY DFHAID.                                                             
+                                                                                
+       01  LINK-AREA.                                                           
+           COPY JKEBKCOM.                                                       
+                                                                                
+       01 ACCT-COMM-AREA.                                                       
+           COPY JKEBLINK.                                                       
+                                                                                
+       01 MORT-COMM-AREA.                                                       
+           COPY JKEMTCOM.                                                       
+                                                                                
+       PROCEDURE DIVISION.
+		   MOVE CURRENT-DATE TO DATE-IN-PROGRAM. 
+           EXEC CICS HANDLE CONDITION ERROR(ERRORS) END-EXEC.                   
+           IF EIBAID = DFHCLEAR  OR DFHPF3 THEN                                 
+               EXEC CICS RETURN END-EXEC.                                       
+      * EXTRACT TEAMID FROM STARTING TRANSACTION                                
+           MOVE EIBTRNID TO STARTING-TRAN.                                      
+           MOVE TEAMID IN STARTING-TRAN TO TEAMID IN ACCT-COMM-AREA.            
+                                                                                
+           EXEC CICS RECEIVE MAP('JKEMAIN') MAPSET('JKEMAIN')                   
+                     RESP(RESPONSE) END-EXEC.                                   
+           IF RESPONSE NOT = DFHRESP(NORMAL) THEN GO TO CHECK-RESP.             
+      * CHECK FOR VALID FUNCTION AND ACCOUNT NUMBER                             
+           EVALUATE TRUE                                                        
+      * Not yet supported                                                       
+      *       WHEN JKECMDI = '1'                                                
+      *  EXEC CICS RETURN TRANSID(MTM-TRAN) IMMEDIATE                           
+      *                COMMAREA(LINKA) END-EXEC.                                
+             WHEN JKECMDI = '2'                                                 
+               EXEC CICS RETURN TRANSID('JKEM') IMMEDIATE                       
+                       COMMAREA(ACCT-COMM-AREA) END-EXEC                        
+             WHEN JKECMDI = '3'                                                 
+               EXEC CICS RETURN TRANSID('JKEP') IMMEDIATE                       
+                       COMMAREA(MORT-COMM-AREA) END-EXEC                        
+             WHEN OTHER                                                         
+               MOVE 'INVALID FUNCTION' TO MESSAGES                              
+           GO TO MENU.                                                          
+                                                                                
+           GOBACK.                                                              
+                                                                                
+       MENU.                                                                    
+      *                                                                         
+           MOVE LOW-VALUE TO JKEMAINO.                                          
+           MOVE MESSAGES  TO ERRMSGO.                                           
+      *                                                                         
+           EXEC CICS SEND MAP('JKEMAIN') MAPSET('JKEMAIN')                      
+                     ERASE END-EXEC.                                            
+      *                                                                         
+           EXEC CICS RETURN TRANSID(EIBTRNID) END-EXEC.                         
+       CHECK-RESP.                                                              
+           IF RESPONSE = DFHRESP(MAPFAIL) THEN                                  
+                 MOVE 'PRESS CLEAR TO EXIT' TO MESSAGES                         
+                 GO TO MENU                                                     
+           ELSE                                                                 
+              MOVE 'TRANSACTION TERMINATED' TO MESSAGES                         
+              GO TO MENU.                                                       
+       BADLENG.                                                                 
+           MOVE 'PLEASE ENTER AN ACCOUNT NUMBER' TO MESSAGES.                   
+           GO TO MENU.                                                          
+       BADCHARS.                                                                
+           MOVE 'ACCOUNT NUMBER MUST BE NUMERIC' TO MESSAGES.                   
+           GO TO MENU.                                                          
+       ERRORS.                                                                  
+           MOVE 'ERROR. TRANSACTION TERMINATED' TO MESSAGES.                    
+           GO TO MENU.                                                          

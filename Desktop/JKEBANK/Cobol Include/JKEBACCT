@@ -1,0 +1,26 @@
+      *****************************************************************         
+      *                                                               *         
+      * Licensed Materials - Property of IBM                          *         
+      *                                                               *         
+      * JKEBACCT.cpy                                                  *         
+      *                                                               *         
+      * ) Copyright IBM Corporation 2012                              *         
+      * U.S. Government Users Restricted Rights:                      *         
+      *      Use, duplication or disclosure                           *         
+      *      restricted by GSA ADP Schedule Corp.                     *         
+      *                                                               *         
+      *                                                               *         
+      * MODULE NAME = JKEBACCT                                        *         
+      *                                                               *         
+      * DESCRIPTIVE NAME = File Layout for Sample Application         *         
+      *                                                               *         
+      *****************************************************************         
+         10  FILEREC.                                                           
+           20  STAT           PIC X.                                            
+           20  NUMB           PIC X(6).                                         
+           20  NAME           PIC X(20).                                        
+           20  ADDRX          PIC X(20).                                        
+           20  PHONE          PIC X(8).                                         
+           20  DATEX          PIC X(8).                                         
+           20  AMOUNT         PIC X(8).                                         
+           20  COMMENT        PIC X(9).                                         

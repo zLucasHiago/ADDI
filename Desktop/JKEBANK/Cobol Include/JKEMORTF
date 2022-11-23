@@ -1,0 +1,24 @@
+      *****************************************************************         
+      *                                                               *         
+      * Licensed Materials - Property of IBM                          *         
+      *                                                               *         
+      * JKEMORTF.cpy                                                  *         
+      *                                                               *         
+      * ) Copyright IBM Corporation 2012                              *         
+      * U.S. Government Users Restricted Rights:                      *         
+      *      Use, duplication or disclosure                           *         
+      *      restricted by GSA ADP Schedule Corp.                     *         
+      *                                                               *         
+      *                                                               *         
+      *****************************************************************         
+       01  MORTGAGE-COMPANY-INFO.                                               
+           03 MORT-FILE-COMPANY               PIC X(24).                        
+           03 MORT-FILE-PHONE-NUM             PIC X(13).                        
+           03 MORT-FILE-RATE                  PIC 9(3)V99.                      
+           03 MORT-FILE-RATE-RDF    REDEFINES MORT-FILE-RATE                    
+                                              PIC X(5).                         
+           03 MORT-FILE-LOAN                  PIC 9(10)V99.                     
+           03 MORT-FILE-LOAN-RDF    REDEFINES MORT-FILE-LOAN                    
+                                              PIC X(12).                        
+           03 MORT-FILE-YEARS                 PIC 9(2).                         
+           03 FILLER                          PIC X(24).                        

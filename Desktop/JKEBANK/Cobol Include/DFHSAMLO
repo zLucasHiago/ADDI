@@ -1,0 +1,236 @@
+      * DFHSAML-FILTER container                                        00001000
+      * Specifies which containers to return                            00002000
+      * Default is all containers                                       00003000
+      * SAML-YES Means the container is returned if there is informatio 00004000
+      * SAML-NO  Means that the container is not required               00005000
+                                                                        00006000
+        01 SAML-FILTER.                                                 00007000
+      *   DFHSAML-COUNTS container                                      00009000
+          02 SAMLI-COUNTS PIC X(1).                                     00008000
+      *   DFHSAML-TIMES container                                       00011000
+          02 SAMLI-TIMES PIC X(1).                                      00010000
+      *   DFHSAML-FLAGS container                                       00013000
+          02 SAMLI-FLAGS PIC X(1).                                      00012000
+      *   DFHSAML-ASSQNAME container                                    00015000
+          02 SAMLI-ASSQNAME PIC X(1).                                   00014000
+      *   DFHSAML-AUDNR* containers                                     00017000
+          02 SAMLI-AUDNR PIC X(1).                                      00016000
+      *   DFHSAML-AUTHMETH container                                    00019000
+          02 SAMLI-AUTHMETH PIC X(1).                                   00018000
+      *   DFHSAML-CONFMETH container                                    00021000
+          02 SAMLI-CONFMETH PIC X(1).                                   00020000
+      *   DFHSAML-CERT* containers                                      00023000
+          02 SAMLI-CERT PIC X(1).                                       00022000
+      *   DFHSAML-PROXY* containers                                     00025000
+          02 SAMLI-PROXY PIC X(1).                                      00024000
+      *   All attributes and values                                     00027000
+          02 SAMLI-ATTR PIC X(1).                                       00026000
+      *   DFHSAML-SAMLID containers                                     00029000
+          02 SAMLI-SAMLID PIC X(1).                                     00028000
+      *   DFHSAML-ISSUER container                                      00031000
+          02 SAMLI-ISSUER PIC X(1).                                     00030000
+      *   DFHSAML-NAMEID* containers                                    00033000
+          02 SAMLI-NAMEID PIC X(1).                                     00032000
+      *   DFHSAML-SUBJ* containers                                      00035000
+          02 SAMLI-SUBJLOC PIC X(1).                                    00034000
+      * DFHSAML-COUNTER container                                       00037000
+      * Returns the number of containers returned for of each type      00038000
+                                                                        00039000
+        01 SAML-COUNTS.                                                 00040000
+      *   Number of audience restriction                                00042000
+      *   vals                                                          00043000
+          02 SAMLC-AUDRNUM PIC S9(8) COMP.                              00041000
+      *   Number of attributes                                          00045000
+          02 SAMLC-ATTRNUM PIC S9(8) COMP.                              00044000
+      *   Number of ProxyRestriction                                    00047000
+      *   Count                                                         00048000
+          02 SAMLC-PROXYNUM PIC S9(8) COMP.                             00046000
+      * DFHSAML-TIMES container                                         00050000
+      * Return timestamps in UTC format (blank if not set)              00051000
+                                                                        00052000
+        01 SAML-TIMES.                                                  00053000
+      *   NotBefore time                                                00055000
+          02 SAMLT-NOTBEFORE PIC X(20).                                 00054000
+      *   NotOnOrAfter time                                             00057000
+          02 SAMLT-EXPIRES PIC X(20).                                   00056000
+      *   SAML token authorised                                         00059000
+          02 SAMLT-AUTHTIME PIC X(20).                                  00058000
+      *   Certificate not valid after                                   00061000
+          02 SAMLT-CERTNAFT PIC X(20).                                  00060000
+      *   Certificate not valid before                                  00063000
+          02 SAMLT-CERTNBEF PIC X(20).                                  00062000
+      * DFHSAML-FLAGS container                                         00065000
+      * Returns flags (each value set to SAML-TRUE or SAML-FALSE        00066000
+                                                                        00067000
+        01 SAML-FLAGS.                                                  00068000
+      *   Proxy Restriction                                             00070000
+          02 SAMLB-PROXYRST PIC X(1).                                   00069000
+      *   One Time Use                                                  00072000
+          02 SAMLB-ONETIME PIC X(1).                                    00071000
+                                                                        00074000
+      * *************************************************************** 00075000
+      *                                                                 00076000
+      * CONTROL BLOCK NAME = DFHSAMLC                                   00077000
+      *                                                                 00078000
+      * DESCRIPTIVE NAME = DFHSAML Structures                           00079000
+      *                                                                 00080000
+      *                                                                 00081000
+      *                                                                 00082000
+      *      Licensed Materials - Property of IBM                       00083000
+      *                                                                 00084000
+      *      "Restricted Materials of IBM"                              00085000
+      *                                                                 00086000
+      *      5655-Y04                                                   00087000
+      *                                                                 00088000
+      *      (C) Copyright IBM Corp. 2013, 2015"                        00089000
+      *                                                                 00090000
+      *                                                                 00091000
+      *                                                                 00092000
+      *                                                                 00093000
+      *                                                                 00094000
+      * STATUS = 7.0.0                                                  00095000
+      *                                                                 00096000
+      * FUNCTION =                                                      00097000
+      *             This maps the DFHSAML containers for the            00098000
+      *             SAML processor linkable interface DFHSAML           00099000
+      *             All character contents are in EBCDIC                00100000
+      *                                                                 00101000
+      * --------------------------------------------------------------- 00102000
+      *                                                                 00103000
+      * CHANGE ACTIVITY :                                               00104000
+      *      $SEG(DFHSAMLC),COMP(SECURITY),PROD(CICS TS ):              00105000
+      *                                                                 00106000
+      *   PN= REASON REL YYMMDD HDXXIII : REMARKS                       00107000
+      *       R34328 670 130313 HDDLCRP : SAML Feature Pack             00108000
+      *       R63854 690 131024 HDJWEF  : SAML for requester pipelines  00109000
+      *       R74986 690 131120 HDDLCRP : Improve error descriptions    00110000
+      *   R78008 690 131128 HDJWEF  : Improve serviceability          00111000
+      *       D84521 690 170114 HDJWEF  : Add SAML return code 31       00112000
+      *       D70501 690 170114 HDJWEF  : Add SAML return code 32 and 3 00113000
+      *                                                                 00114000
+      * *************************************************************** 00115000
+      * Required input container                                        00116000
+        77 DFHSAML-TOKEN PIC X(16) VALUE 'DFHSAML-TOKEN   '.            00117000
+      * Optional input container                                        00118000
+        77 DFHSAML-FUNCTION PIC X(16) VALUE 'DFHSAML-FUNCTION'.         00119000
+        77 DFHSAML-JVMSERVR PIC X(16) VALUE 'DFHSAML-JVMSERVR'.         00120000
+        77 DFHSAML-FILTER PIC X(16) VALUE 'DFHSAML-FILTER  '.           00121000
+        77 DFHSAML-SIGNED PIC X(16) VALUE 'DFHSAML-SIGNED  '.           00122000
+      * Output Container always returned                                00123000
+        77 DFHSAML-RESPONSE PIC X(16) VALUE 'DFHSAML-RESPONSE'.         00124000
+      * Optional output containers (based on DFHSAML-FILTER)            00125000
+      * Replace nnn,mmm with numbers                                    00126000
+        77 DFHSAML-OUTTOKEN PIC X(16) VALUE 'DFHSAML-OUTTOKEN'.         00127000
+        77 DFHSAML-COUNTS PIC X(16) VALUE 'DFHSAML-COUNTS  '.           00128000
+        77 DFHSAML-TIMES PIC X(16) VALUE 'DFHSAML-TIMES   '.            00129000
+        77 DFHSAML-FLAGS PIC X(16) VALUE 'DFHSAML-FLAGS   '.            00130000
+        77 DFHSAML-ASSQNAME PIC X(16) VALUE 'DFHSAML-ASSQNAME'.         00131000
+        77 DFHSAML-AUDNRNNN PIC X(16) VALUE 'DFHSAML-AUDNRnnn'.         00132000
+        77 DFHSAML-AUTHMETH PIC X(16) VALUE 'DFHSAML-AUTHMETH'.         00133000
+        77 DFHSAML-CONFMETH PIC X(16) VALUE 'DFHSAML-CONFMETH'.         00134000
+        77 DFHSAML-PROXYNNN PIC X(16) VALUE 'DFHSAML-PROXYnnn'.         00135000
+        77 DFHSAML-ANNNVMMM PIC X(16) VALUE 'DFHSAML-AnnnVmmm'.         00136000
+        77 DFHSAML-ATTRANNN PIC X(16) VALUE 'DFHSAML-ATTRAnnn'.         00137000
+        77 DFHSAML-ATTRFNNN PIC X(16) VALUE 'DFHSAML-ATTRFnnn'.         00138000
+        77 DFHSAML-ATTRNNNN PIC X(16) VALUE 'DFHSAML-ATTRNnnn'.         00139000
+        77 DFHSAML-ATTRSNNN PIC X(16) VALUE 'DFHSAML-ATTRSnnn'.         00140000
+        77 DFHSAML-ATTRYNNN PIC X(16) VALUE 'DFHSAML-ATTRYnnn'.         00141000
+        77 DFHSAML-SAMLID PIC X(16) VALUE 'DFHSAML-SAMLID  '.           00142000
+        77 DFHSAML-ISSUER PIC X(16) VALUE 'DFHSAML-ISSUER  '.           00143000
+        77 DFHSAML-NAMEID PIC X(16) VALUE 'DFHSAML-NAMID   '.           00144000
+        77 DFHSAML-NAMEIDF PIC X(16) VALUE 'DFHSAML-NAMIDF  '.          00145000
+        77 DFHSAML-NAMEIDQ PIC X(16) VALUE 'DFHSAML-NAMIDQ  '.          00146000
+        77 DFHSAML-NAMEIDSP PIC X(16) VALUE 'DFHSAML-NAMIDSP '.         00147000
+        77 DFHSAML-NAMEIDSPQ PIC X(16) VALUE 'DFHSAML-NAMIDSQ '.        00148000
+        77 DFHSAML-CERTSNUM PIC X(16) VALUE 'DFHSAML-CERTSNUM'.         00149000
+        77 DFHSAML-CERTIDN PIC X(16) VALUE 'DFHSAML-CERTIDN '.          00150000
+        77 DFHSAML-CERTSDN PIC X(16) VALUE 'DFHSAML-CERTSDN '.          00151000
+        77 DFHSAML-SUBJADDR PIC X(16) VALUE 'DFHSAML-SUBJADDR'.         00152000
+        77 DFHSAML-SUBJDNS PIC X(16) VALUE 'DFHSAML-SUBJDNS '.          00153000
+      * DFHSAML-FUNCTION container                                      00154000
+      * Specifies why DFHSAML is being called                           00155000
+      * Default is EXTRACT                                              00156000
+      * Validate and                                                    00157000
+      * Extract                                                         00158000
+        77 SAML-EXTRACT PIC X(8) VALUE 'EXTRACT '.                      00159000
+      * Validate Only                                                   00160000
+        77 SAML-VALIDATE PIC X(8) VALUE 'VALIDATE'.                     00161000
+      * Issue                                                           00162000
+        77 SAML-ISSUE PIC X(8) VALUE 'ISSUE   '.                        00163000
+      * DFHSAML-SIGNED container                                        00164000
+      * Specifies whether signature validation is performed             00165000
+      * Default is REQUIRED                                             00166000
+        77 SAML-REQUIRED PIC X(16) VALUE 'DFHSAML-REQUIRED'.            00167000
+        77 SAML-IGNORED PIC X(16) VALUE 'DFHSAML-IGNORED '.             00168000
+        77 SAML-YES PIC X(1) VALUE 'Y'.                                 00169000
+        77 SAML-NO PIC X(1) VALUE 'N'.                                  00170000
+      * Constants to set saml_filter to return all or none              00171000
+        77 SAML-FILTER-ALL PIC X(14) VALUE 'YYYYYYYYYYYYYY'.            00172000
+        77 SAML-FILTER-NONE PIC X(14) VALUE 'NNNNNNNNNNNNNN'.           00173000
+      * DFHSAML-RESPONSE container                                      00174000
+      * Returns a binary value to indicate success or error             00175000
+      * OK                                                              00176000
+        77 SAML-RESP-OK PIC S9(8) COMP VALUE 0.                         00177000
+      * The SAML token is invalid                                       00178000
+        77 SAML-RESP-XMLERROR PIC S9(8) COMP VALUE 1.                   00179000
+      * Container error                                                 00180000
+        77 SAML-RESP-INVCONTAINER PIC S9(8) COMP VALUE 2.               00181000
+      * A required input container is missing                           00182000
+        77 SAML-RESP-NOCONTAINER PIC S9(8) COMP VALUE 3.                00183000
+      * The JVM server is not enabled                                   00184000
+        77 SAML-RESP-JVMNOTENA PIC S9(8) COMP VALUE 6.                  00185000
+      * The JVM server is not found                                     00186000
+        77 SAML-RESP-JVMNOTFND PIC S9(8) COMP VALUE 7.                  00187000
+      * The DFHSAML-FUNCTION container is not CHAR                      00188000
+        77 SAML-RESP-TYPEFUNC PIC S9(8) COMP VALUE 9.                   00189000
+      * The DFHSAML-TOKEN container is missing                          00190000
+        77 SAML-RESP-NOTOKEN PIC S9(8) COMP VALUE 10.                   00191000
+      * The DFHSAML-TOKEN container is not CHAR                         00192000
+        77 SAML-RESP-TYPETOKEN PIC S9(8) COMP VALUE 11.                 00193000
+      * The DFHSAML-JVMSERVR container is not CHAR                      00194000
+        77 SAML-RESP-TYPEJVM PIC S9(8) COMP VALUE 12.                   00195000
+      * The DFHSAML-FILTER container is not CHAR                        00196000
+        77 SAML-RESP-TYPEFILTER PIC S9(8) COMP VALUE 13.                00197000
+      * The DFHSAML-SIGNED container is not CHAR                        00198000
+        77 SAML-RESP-TYPESIGNED PIC S9(8) COMP VALUE 14.                00199000
+      * An error occurred in parsing the token.                         00200000
+      * The DFHSJ-ERROR container contains further details.             00201000
+        77 SAML-RESP-JAVAERROR PIC S9(8) COMP VALUE 15.                 00202000
+      * The DFHSAML-FILTER container has invalid data                   00203000
+        77 SAML-RESP-INVFILTER PIC S9(8) COMP VALUE 16.                 00204000
+      * The DFHSAML-FUNCTION container has invalid data                 00205000
+        77 SAML-RESP-INVFUNC PIC S9(8) COMP VALUE 17.                   00206000
+      * The DFHSAML-SIGNED container has invalid data                   00207000
+        77 SAML-RESP-INVSIGNED PIC S9(8) COMP VALUE 18.                 00208000
+      * The certificate has expired                                     00209000
+        77 SAML-CERT-EXPIRED PIC S9(8) COMP VALUE 21.                   00210000
+      * The token has expired                                           00211000
+        77 SAML-TOKEN-EXPIRED PIC S9(8) COMP VALUE 22.                  00212000
+      * The certificate in the token is not trusted                     00213000
+        77 SAML-CERT-NOT-TRUSTED PIC S9(8) COMP VALUE 23.               00214000
+      * Container not readonly                                          00215000
+        77 SAML-RESP-NOTREADO PIC S9(8) COMP VALUE 24.                  00216000
+      * Signature not configured in the STS configuration file          00217000
+        77 SAML-RESP-NOSIGN PIC S9(8) COMP VALUE 25.                    00218000
+      * Add attribute error                                             00219000
+        77 SAML-RESP-ADDATTR PIC S9(8) COMP VALUE 26.                   00220000
+      * Attribute input containers are not CHAR                         00221000
+        77 SAML-RESP-TYPEATTR PIC S9(8) COMP VALUE 27.                  00222000
+      * Attribute value missing or empty                                00223000
+        77 SAML-RESP-NOATTRVAL PIC S9(8) COMP VALUE 28.                 00224000
+      * Attribute name missing or empty                                 00225000
+        77 SAML-RESP-NOATTRNAME PIC S9(8) COMP VALUE 29.                00226000
+      * Keyring not specified                                           00227000
+        77 SAML-RESP-NOKEYRING PIC S9(8) COMP VALUE 30.                 00228000
+      *  Certificate not found in the keyring                           00229000
+        77 SAML-RESP-CERTNOTFOUND PIC S9(8) COMP VALUE 31.              00230000
+      *  ************************************************************** 00231000
+      *                                                                 00232000
+      *   Transaction channel not found                                 00233000
+      *                                                                 00234000
+      *  ************************************************************** 00235000
+        77 SAML-RESP-NOTRANSCHAN PIC S9(8) COMP VALUE 32.               00236000
+      *  Bad JVM server                                                 00237000
+        77 SAML-RESP-BADJVMSERVER PIC S9(8) COMP VALUE 33.              00238000
+        77 SAML-TRUE PIC X(1) VALUE 'Y'.                                00239000
+        77 SAML-FALSE PIC X(1) VALUE 'N'.                               00240000

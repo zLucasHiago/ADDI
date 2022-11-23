@@ -1,0 +1,30 @@
+      *****************************************************************         
+      *                                                               *         
+      * Licensed Materials - Property of IBM                          *         
+      *                                                               *         
+      * JKEBLOG.cpy                                                   *         
+      *                                                               *         
+      * ) Copyright IBM Corporation 2012                              *         
+      * U.S. Government Users Restricted Rights:                      *         
+      *      Use, duplication or disclosure                           *         
+      *      restricted by GSA ADP Schedule Corp.                     *         
+      *                                                               *         
+      *                                                               *         
+      * MODULE NAME = JKEBLOG                                         *         
+      *                                                               *         
+      * DESCRIPTIVE NAME = Log Layout for Sample Application          *         
+      *                                                               *         
+      *****************************************************************         
+         02  LOGHDR.                                                            
+           03  LDAY           PIC S9(7) COMP-3.                                 
+           03  LTIME          PIC S9(7) COMP-3.                                 
+           03  LTERML         PIC X(4).                                         
+         02  LOGREC.                                                            
+           03  LSTAT          PIC X.                                            
+           03  LNUMB          PIC X(6).                                         
+           03  LNAME          PIC X(20).                                        
+           03  LADDR          PIC X(20).                                        
+           03  LPHONE         PIC X(8).                                         
+           03  LDATE          PIC X(8).                                         
+           03  LAMOUNT        PIC X(8).                                         
+           03  LCOMMENT       PIC X(9).                                         

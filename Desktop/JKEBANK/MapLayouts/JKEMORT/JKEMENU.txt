@@ -1,0 +1,24 @@
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                        JKE MORTGAGE CALCULATOR                                 
+                                                                                
+                                                                                
+              Amount of Loan:            1000                                   
+              Length of Loan in Years:   10                                     
+              Interest Rate:             5                                      
+                                                                                
+                                                                                
+                                                                                
+              Press F3 to quit or Enter to calculate loan                       
+      Press PF9 to see companies that can match or beat this rate               
+                                                                                
+              Monthly Payment:           ____________                           
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+________________________________________________________________________________
+                                                                                

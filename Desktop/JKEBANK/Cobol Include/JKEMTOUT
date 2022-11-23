@@ -1,0 +1,31 @@
+      *****************************************************************         
+      *                                                               *         
+      * Licensed Materials - Property of IBM                          *         
+      *                                                               *         
+      * JKEMTOUT.cpy                                                  *         
+      *                                                               *         
+      * ) Copyright IBM Corporation 2012                              *         
+      * U.S. Government Users Restricted Rights:                      *         
+      *      Use, duplication or disclosure                           *         
+      *      restricted by GSA ADP Schedule Corp.                     *         
+      *                                                               *         
+      *****************************************************************         
+                                                                                
+                                                                                
+      * OUTPUT for Getting Companies and Monthly Payments                       
+          03  MORTGAGE-COMPANY-TABLE.                                           
+              05 ROW-COUNT                     PIC 9(3) COMP.                   
+              05 MORT-TABLE-REC OCCURS 8 TIMES.                                 
+                 10 MORT-COMPANY               PIC X(24).                       
+                 10 MORT-PHONE-NUM             PIC X(13).                       
+                 10 MORT-RATE                  PIC 9(3)V99.                     
+                 10 MORT-LOAN                  PIC 9(10)V99.                    
+                 10 MORT-YEARS                 PIC 9(2).                        
+          03 JKEPCOM-RETURN-MONTH-PAYMENT                                       
+                                      PIC S9(7)V99 COMP.                        
+          03 JKEPCOM-ERRMSG           PIC X(80).                                
+          03 JKEPCOM-PROGRAM-RETCODE  PIC 9(4).                                 
+             88 JKE02-REQUEST-SUCCESS VALUE 0.                                  
+          03 JKEPCOM-PROGRAM-RETCODE-RDF                                        
+                  REDEFINES JKEPCOM-PROGRAM-RETCODE                             
+                                      PIC X(4).                                 

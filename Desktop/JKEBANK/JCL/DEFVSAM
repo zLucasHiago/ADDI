@@ -1,0 +1,44 @@
+//BONNERRX JOB (G8816301),'P BONNERRERS',CLASS=A,                               
+//        REGION=0M,NOTIFY=BONNERR                                              
+//*                                                                             
+//DELMVSAM EXEC PGM=IDCAMS                                                      
+//SYSPRINT DD SYSOUT=*                                                          
+//SYSIN DD *                                                                    
+   DELETE 'BONNERR.JKEP.JKEMORTF.ESDS' PURGE CLUSTER                            
+   SET MAXCC=0                                                                  
+//*                                                                             
+//DEFMVSAM EXEC PGM=IDCAMS,COND=(0,NE)                                          
+//SYSPRINT DD SYSOUT=*                                                          
+//SYSIN DD *                                                                    
+   DEFINE CLUSTER (NAME(BONNERR.JKEP.JKEMORTF.ESDS)-                            
+        NONINDEXED -                                                            
+        CONTROLINTERVALSIZE(2048) -                                             
+        BUFFERSPACE(8704) -                                                     
+        SHAREOPTIONS(4 3) -                                                     
+        REUSE -                                                                 
+        SPEED -                                                                 
+        NOERASE -                                                               
+        SPANNED -                                                               
+            ) -                                                                 
+        DATA (NAME(BONNERR.JKEP.JKEMORTF.ESDS.DATA) -                           
+          TRACKS(5 5) -                                                         
+          RECORDSIZE(80 80) -                                                   
+          FREESPACE(0 0) -                                                      
+               )                                                                
+//*                                                                             
+//CPYKSDS  EXEC PGM=IDCAMS,COND=(0,NE)                                          
+//SYSPRINT DD SYSOUT=*                                                          
+//INFILE   DD *                                                                 
+KNEE CRACK LOAN INDUSTRY(888)123-44440069500005000000030                        
+IOU CREATIONS           (866)322-33440056000010000002540                        
+LOUIES LOAN SERVICE     (800)542-98310057500002000000020                        
+GOTTABUCK INDUSTRIES    (800)983-32460089500002000000020                        
+ONEDAY LOANS            (866)744-98340038200000500000010                        
+RICH OFFYOU INC         (866)968-69330555500002000000010                        
+BITOFFTHETOP LLP        (888)968-69330042500001000000030                        
+RIP YAAOFF INC          (800)968-69330072500021000000030                        
+//OUTFILE  DD DSN=BONNERR.JKEP.JKEMORTF.ESDS,DISP=OLD,                          
+//            AMP='BUFNI=10,BUFND=10'                                           
+//SYSIN DD *                                                                    
+  REPRO INFILE(INFILE) OUTFILE(OUTFILE)                                         
+/*                                                                              

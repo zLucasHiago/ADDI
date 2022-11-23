@@ -1,0 +1,81 @@
+         TITLE 'FILEA - MAP FOR FILE INQUIRY/UPDATE - COBOL'                    
+***********************************************************************         
+*                                                                     *         
+* MODULE NAME = DFH0CMB                                               *         
+*                                                                     *         
+* DESCRIPTIVE NAME = Inquiry/Update Map for Sample Application        *         
+*                                                                     *         
+* @BANNER_START                           01                          *         
+* Licensed Materials - Property of IBM                                *         
+*                                                                     *         
+* 5655-M15              DFH0CMB                                       *         
+*                                                                     *         
+* (C) Copyright IBM Corp. 1990, 2003                                  *         
+* U.S. Government Users Restricted Rights:  Use, duplication          *         
+* or disclosure restricted by GSA ADP Schedule Contract with IBM Corp.*         
+*                                                                     *         
+* CICS                                                                *         
+* (Element of CICS Transaction Server                                 *         
+* for z/OS, Version 3 Release 2)                                      *         
+* @BANNER_END                                                         *         
+*                                                                     *         
+* STATUS = 6.3.0                                                      *         
+*                                                                     *         
+*---------------------------------------------------------------------*         
+*                                                                     *         
+* CHANGE ACTIVITY :                                                   *         
+* $SEG(DFH0CMB),COMP(SAMPLES),PROD(CICS    ):                         *         
+*                                                                     *         
+*     PN= REASON REL YYMMDD HDXIII : REMARKS                          *         
+*    $P0= .      320 900320        : Created.                         *         
+*    $P1= M90474 330 910807 HDBWSH : Prologue fixed.                  *         
+*    $P2= M51026 620 010511 HD7OPJW: Improve sample maps              *         
+*    $P3= D06972 630 030322 HD1MA  : Improve sample maps (templates)  *         
+*                                                                     *         
+         AIF   ('&SYSPARM' EQ 'DSECT').SKIPSD                      @P2A         
+         AIF   ('&SYSPARM' EQ 'ADSECT').SKIPSD                     @P2A         
+         AIF   ('&SYSPARM' EQ 'TEMPLATE').SKIPSD                   @P3A         
+JKMXXGBC CSECT                                                     @P2A         
+JKMXXGBC AMODE 31                                                  @P2A         
+JKMXXGBC RMODE ANY                                                 @P2A         
+.SKIPSD  ANOP ,                                                    @P2A         
+JKMXXGB  DFHMSD TYPE=&SYSPARM,MODE=INOUT,CTRL=(FREEKB,FRSET),          *        
+               LANG=COBOL,TIOAPFX=YES,EXTATT=MAPONLY                            
+DETAIL   DFHMDI SIZE=(24,80),                                          *        
+               COLUMN=1,                                               *        
+               LINE=1                                                           
+         DFHMDF POS=(3,27),LENGTH=21,INITIAL='JK Enterprises Bank',    *        
+               ATTRB=(ASKIP,BRT),HILIGHT=OFF,COLOR=NEUTRAL                      
+* *******************************************************************           
+TITLE    DFHMDF POS=(5,27),LENGTH=20,COLOR=NEUTRAL                              
+         DFHMDF POS=(7,24),LENGTH=8,INITIAL='NUMBER:',COLOR=BLUE                
+NUMB     DFHMDF POS=(7,33),LENGTH=6                                             
+         DFHMDF POS=(7,40),LENGTH=1                                             
+         DFHMDF POS=(9,24),LENGTH=8,INITIAL='NAME:   ',COLOR=BLUE               
+NAME     DFHMDF POS=(9,33),LENGTH=20,                                  *        
+               ATTRB=(UNPROT,IC)                                                
+         DFHMDF POS=(9,54),LENGTH=1                                             
+         DFHMDF POS=(11,24),LENGTH=8,INITIAL='ADDRESS:',COLOR=BLUE              
+ADDR     DFHMDF POS=(11,33),LENGTH=20,                                 *        
+               ATTRB=UNPROT                                                     
+         DFHMDF POS=(11,54),LENGTH=1                                            
+         DFHMDF POS=(13,24),LENGTH=8,INITIAL='PHONE:   ',COLOR=BLUE             
+PHONE    DFHMDF POS=(13,33),LENGTH=8,                                  *        
+               ATTRB=UNPROT                                                     
+         DFHMDF POS=(13,42),LENGTH=1                                            
+         DFHMDF POS=(15,24),LENGTH=8,INITIAL='DATE:    ',COLOR=BLUE             
+DATE     DFHMDF POS=(15,33),LENGTH=8,                                  *        
+               ATTRB=UNPROT                                                     
+         DFHMDF POS=(15,42),LENGTH=1                                            
+         DFHMDF POS=(17,24),LENGTH=8,INITIAL='AMOUNT:  ',COLOR=BLUE             
+AMOUNT   DFHMDF POS=(17,33),LENGTH=8,                                  *        
+               ATTRB=NUM                                                        
+         DFHMDF POS=(17,42),LENGTH=1                                            
+         DFHMDF POS=(19,24),LENGTH=8,INITIAL='COMMENT:',COLOR=BLUE              
+COMMENT  DFHMDF POS=(19,33),LENGTH=9,                                  *        
+               ATTRB=UNPROT                                                     
+         DFHMDF POS=(19,43),LENGTH=1                                            
+MSG1     DFHMDF POS=(22,18),LENGTH=39,COLOR=NEUTRAL                             
+MSG3     DFHMDF POS=(23,18),LENGTH=39,COLOR=NEUTRAL                             
+         DFHMSD TYPE=FINAL                                              92000000
+         END                                                            96000000

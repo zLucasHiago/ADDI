@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="C:\Program Files (x86)\IBM Application Discovery Build Client\Modules\ReportIT\XMLs\DefaultMissingComponentsStyle.xsl"?>
+<REPORT xmlns="x-schema:Report_Schema.xml">
+	<REPORT_TYPE>Missing Components</REPORT_TYPE>
+	<HEADER>
+		<COMPANY>
+			<COMPANY_NAME display="no">Company Name</COMPANY_NAME>
+			<LOGO display="no" valid="no"><SRC xmlns=""></SRC><WIDTH xmlns=""></WIDTH><HEIGHT xmlns=""></HEIGHT><ALT xmlns=""></ALT></LOGO>
+			<ADDRESS display="no">Company address</ADDRESS>
+		</COMPANY>
+		<PROJECT>
+			<PROJECT_NAME display="yes">JKEBank5</PROJECT_NAME>
+			<PROJECT_VERSION display="yes"></PROJECT_VERSION>
+		</PROJECT>
+		<REPORT_NAME display="yes">Missing Components Report</REPORT_NAME>
+		<TIME display="no"/>
+		<DATE display="no"/>
+	</HEADER>
+	<FOOTER>
+		<COMPANY>
+			<COMPANY_NAME display="no">Company Name</COMPANY_NAME>
+		</COMPANY>
+		<PROJECT>
+			<PROJECT_NAME display="no"/>
+		</PROJECT>
+		<REPORT_NAME display="no">Missing Components Report</REPORT_NAME>
+		<TIME display="no"/>
+		<DATE display="no"/>
+	</FOOTER>
+	<TITLE>
+		<PROJECT/>
+		<DATE/>
+	</TITLE>
+	<QUERIES>
+		<QUERY>
+			<INIT_CONNECTION><PROJECT_NAME xmlns="">JKEBank5</PROJECT_NAME><PROJECT_PATH xmlns="">\\YAS02VVTMOHIKAT\Projects\JKEBank5\</PROJECT_PATH><DB_TYPE xmlns="">1</DB_TYPE></INIT_CONNECTION>
+			<ASK>
+				<SCOPE>
+					<SCOPE_TYPE>1</SCOPE_TYPE>
+				</SCOPE>
+				<DATA_TYPE>3</DATA_TYPE>
+				<CAPS>
+					<OCCUR_CAPS/>
+				</CAPS>
+			</ASK>
+			<RESULT>
+				<COMPONENT_TYPE display="yes">Component Type</COMPONENT_TYPE>
+				<COMPONENT_WNAME display="yes">Component Name</COMPONENT_WNAME>
+				<SUBCOMPONENT_NAME display="yes">SubComponent Name</SUBCOMPONENT_NAME>
+			</RESULT>
+		</QUERY>
+	</QUERIES>
+	<RESULTS>
+		<CRITICAL_COMPONENTS display="no"/>
+		<REFERENCED_RESOURCES display="yes"><RESULT xmlns=""><COMPONENT_TYPE display="yes">Programs</COMPONENT_TYPE><COMPONENT_WNAME display="yes">CEE3SRP</COMPONENT_WNAME><SUBCOMPONENT_NAME display="yes"></SUBCOMPONENT_NAME></RESULT><RESULT xmlns=""><COMPONENT_TYPE display="no">Programs</COMPONENT_TYPE><COMPONENT_WNAME display="yes">CEECMI</COMPONENT_WNAME><SUBCOMPONENT_NAME display="no"></SUBCOMPONENT_NAME></RESULT><RESULT xmlns=""><COMPONENT_TYPE display="no">Programs</COMPONENT_TYPE><COMPONENT_WNAME display="yes">CEECZST</COMPONENT_WNAME><SUBCOMPONENT_NAME display="no"></SUBCOMPONENT_NAME></RESULT><RESULT xmlns=""><COMPONENT_TYPE display="no">Programs</COMPONENT_TYPE><COMPONENT_WNAME display="yes">CEEFRST</COMPONENT_WNAME><SUBCOMPONENT_NAME display="no"></SUBCOMPONENT_NAME></RESULT><RESULT xmlns=""><COMPONENT_TYPE display="no">Programs</COMPONENT_TYPE><COMPONENT_WNAME display="yes">CEEGTST</COMPONENT_WNAME><SUBCOMPONENT_NAME display="no"></SUBCOMPONENT_NAME></RESULT><RESULT xmlns=""><COMPONENT_TYPE display="no">Programs</COMPONENT_TYPE><COMPONENT_WNAME display="yes">CEEHDLR</COMPONENT_WNAME><SUBCOMPONENT_NAME display="no"></SUBCOMPONENT_NAME></RESULT><RESULT xmlns=""><COMPONENT_TYPE display="no">Programs</COMPONENT_TYPE><COMPONENT_WNAME display="yes">CEEHDLU</COMPONENT_WNAME><SUBCOMPONENT_NAME display="no"></SUBCOMPONENT_NAME></RESULT><RESULT xmlns=""><COMPONENT_TYPE display="no">Programs</COMPONENT_TYPE><COMPONENT_WNAME display="yes">CEEMGET</COMPONENT_WNAME><SUBCOMPONENT_NAME display="no"></SUBCOMPONENT_NAME></RESULT><RESULT xmlns=""><COMPONENT_TYPE display="no">Programs</COMPONENT_TYPE><COMPONENT_WNAME display="yes">CEEMRCE</COMPONENT_WNAME><SUBCOMPONENT_NAME display="no"></SUBCOMPONENT_NAME></RESULT><RESULT xmlns=""><COMPONENT_TYPE display="no">Programs</COMPONENT_TYPE><COMPONENT_WNAME display="yes">CEENCOD</COMPONENT_WNAME><SUBCOMPONENT_NAME display="no"></SUBCOMPONENT_NAME></RESULT><RESULT xmlns=""><COMPONENT_TYPE display="no">Programs</COMPONENT_TYPE><COMPONENT_WNAME display="yes">CEESGL</COMPONENT_WNAME><SUBCOMPONENT_NAME display="no"></SUBCOMPONENT_NAME></RESULT><RESULT xmlns=""><COMPONENT_TYPE display="yes">Programs called in jobs</COMPONENT_TYPE><COMPONENT_WNAME display="yes">IDCAMS</COMPONENT_WNAME><SUBCOMPONENT_NAME display="no"></SUBCOMPONENT_NAME></RESULT></REFERENCED_RESOURCES>
+		<NO_MISSING_COMPONENTS display="no"/>
+	</RESULTS>
+	<SUMMARY>
+		<PROCS>0</PROCS>
+		<INCLUDE_MEMBERS>0</INCLUDE_MEMBERS>
+		<CONTROL_FILES>0</CONTROL_FILES>
+		<MAPS>0</MAPS>
+		<PROGRAMS>11</PROGRAMS>
+		<JOBS>1</JOBS>
+		<TRANS>0</TRANS>
+		<COBOL_COPY xmlns="">0</COBOL_COPY></SUMMARY>
+</REPORT>

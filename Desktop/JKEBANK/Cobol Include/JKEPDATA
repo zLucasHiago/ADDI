@@ -1,0 +1,27 @@
+      *****************************************************************         
+      *                                                               *         
+      * Licensed Materials - Property of IBM                          *         
+      *                                                               *         
+      * JKEPDATA.cpy                                                  *         
+      *                                                               *         
+      * ) Copyright IBM Corporation 2012                              *         
+      * U.S. Government Users Restricted Rights:                      *         
+      *      Use, duplication or disclosure                           *         
+      *      restricted by GSA ADP Schedule Corp.                     *         
+      *                                                               *         
+      *****************************************************************         
+                                                                                
+       01  JKEPDATA.                                                            
+      * INPUT for calculating mortgage                                          
+           03 JKEPDATA-PRINCIPLE-DATA   PIC S9(9)V99 COMP.                      
+           03 JKEPDATA-NUMBER-OF-YEARS  PIC S9(4)    COMP.                      
+           03 JKEPDATA-NUMBER-OF-MONTHS PIC S9(4)    COMP.                      
+           03 JKEPDATA-QUOTED-INTEREST-RATE                                     
+                                        PIC S9(2)v9(3) COMP.                    
+           03 JKEPDATA-YEAR-MONTH-IND   PIC X.                                  
+      * OUTPUT of mortgage calculation                                          
+           03 JKEPDATA-RETURN-MONTH-PAYMENT                                     
+                                        PIC S9(7)V99 COMP.                      
+           03 JKEPDATA-RETURN-TOTAL-COST                                        
+                                        PIC X(5).                               
+           03 JKEPDATA-RETURN-ERROR     PIC X(80).                              

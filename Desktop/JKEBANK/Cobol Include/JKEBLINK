@@ -1,0 +1,33 @@
+      *****************************************************************         
+      *                                                               *         
+      * Licensed Materials - Property of IBM                          *         
+      *                                                               *         
+      * JKEBLINK.cpy                                                  *         
+      *                                                               *         
+      * ) Copyright IBM Corporation 2012                              *         
+      * U.S. Government Users Restricted Rights:                      *         
+      *      Use, duplication or disclosure                           *         
+      *      restricted by GSA ADP Schedule Corp.                     *         
+      *                                                               *         
+      *                                                               *         
+      * MODULE NAME = JKEBLINK                                        *         
+      *                                                               *         
+      * DESCRIPTIVE NAME = Log Layout for Sample Application          *         
+      *                                                               *         
+      *****************************************************************         
+           10 LINK-COMM.                                                        
+               20  USER-REQUEST    PIC X.                                       
+                 88 ACCOUNT-OPEN     VALUE 'O'.                                 
+                 88 ACCOUNT-VIEW     VALUE 'V'.                                 
+                 88 ACCOUNT-CHANGE   VALUE 'U'.                                 
+                 88 ACCOUNT-CLOSE    VALUE 'C'.                                 
+               20  SERVER-REQUEST  PIC X.                                       
+                 88 ACCOUNT-CREATE   VALUE 'C'.                                 
+                 88 ACCOUNT-READ     VALUE 'R'.                                 
+                 88 ACCOUNT-UPDATE   VALUE 'U'.                                 
+                 88 ACCOUNT-DELETE   VALUE 'D'.                                 
+                 88 ACCOUNT-BROWSE   VALUE 'B'.                                 
+               20  KEYNUM          PIC 9(6).                                    
+               20  TEAMID          PIC X(2).                                    
+               20  RCODE           PIC 9(9)  COMP.                              
+               20  ERR-RESP        PIC 99.                                      

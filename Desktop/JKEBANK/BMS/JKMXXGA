@@ -1,0 +1,76 @@
+         TITLE 'FILEA - MAP FOR OPERATOR INSTRUCTIONS - COBOL'                  
+***********************************************************************         
+*                                                                     *         
+* MODULE NAME = DFH0CMA                                               *         
+*                                                                     *         
+* DESCRIPTIVE NAME = Operator Instructions Map for Sample Application *         
+*                                                                     *         
+* @BANNER_START                           01                          *         
+* Licensed Materials - Property of IBM                                *         
+*                                                                     *         
+* 5655-M15              DFH0CMA                                       *         
+*                                                                     *         
+* (C) Copyright IBM Corp. 1990, 2003                                  *         
+* U.S. Government Users Restricted Rights:  Use, duplication          *         
+* or disclosure restricted by GSA ADP Schedule Contract with IBM Corp.*         
+*                                                                     *         
+* CICS                                                                *         
+* (Element of CICS Transaction Server                                 *         
+* for z/OS, Version 3 Release 2)                                      *         
+* @BANNER_END                                                         *         
+*                                                                     *         
+* STATUS = 6.3.0                                                      *         
+*                                                                     *         
+*---------------------------------------------------------------------*         
+*                                                                     *         
+* CHANGE ACTIVITY :                                                   *         
+* $SEG(DFH0CMA),COMP(SAMPLES),PROD(CICS    ):                         *         
+*                                                                     *         
+*     PN= REASON REL YYMMDD HDXIII : REMARKS                          *         
+*    $P0= .      320 900320        : Created.                         *         
+*    $P1= M90474 330 910807 HDBWSH : Prologue fixed.                  *         
+*    $P2= M51026 620 010511 HD7OPJW: Improve sample maps              *         
+*    $P3= D06972 630 030322 HD1MA  : Improve sample maps (templates)  *         
+         AIF   ('&SYSPARM' EQ 'DSECT').SKIPSD                      @P2A         
+         AIF   ('&SYSPARM' EQ 'ADSECT').SKIPSD                     @P2A         
+         AIF   ('&SYSPARM' EQ 'TEMPLATE').SKIPSD                   @P3A         
+JKMXXGAC CSECT                                                     @P2A         
+JKMXXGAC AMODE 31                                                  @P2A         
+JKMXXGAC RMODE ANY                                                 @P2A         
+.SKIPSD  ANOP ,                                                    @P2A         
+JKMXXGA  DFHMSD TYPE=&SYSPARM,MODE=INOUT,CTRL=(FREEKB,FRSET),          *        
+               LANG=COBOL,TIOAPFX=YES,EXTATT=MAPONLY,COLOR=BLUE                 
+MENU     DFHMDI SIZE=(24,79),                                          *        
+               COLUMN=2,                                               *        
+               LINE=1                                                           
+         DFHMDF POS=(3,25),LENGTH=20,INITIAL='JK ENTERPRISES BANK',    *        
+               ATTRB=(ASKIP,NORM),HILIGHT=OFF,COLOR=NEUTRAL                     
+         DFHMDF POS=(5,24),LENGTH=23,INITIAL='CUSTOMER ACCOUNT MENU',  *        
+               HILIGHT=OFF,COLOR=NEUTRAL                                        
+         DFHMDF POS=(8,22),LENGTH=27,                                  *        
+               INITIAL='Select an account function,'                            
+         DFHMDF POS=(9,29),LENGTH=8,INITIAL='1 - Open',COLOR=NEUTRAL            
+FUNCTION DFHMDF POS=(9,39),LENGTH=1,                                   *        
+               ATTRB=(UNPROT,IC),HILIGHT=UNDERLINE,                    *        
+               VALIDN=MUSTFILL,COLOR=DEFAULT                                    
+         DFHMDF POS=(9,41),LENGTH=1,INITIAL=' ',                       *        
+               ATTRB=(ASKIP,NORM),HILIGHT=OFF,COLOR=GREEN                       
+         DFHMDF POS=(10,29),LENGTH=8,INITIAL='2 - View',COLOR=NEUTRAL           
+         DFHMDF POS=(11,29),LENGTH=10,INITIAL='3 - Update',            *        
+               COLOR=NEUTRAL                                                    
+         DFHMDF POS=(14,23),LENGTH=25,                                 *        
+               INITIAL='provide an acount number,'                              
+         DFHMDF POS=(15,24),LENGTH=15,INITIAL='Account number:',       *        
+               COLOR=NEUTRAL                                                    
+KEY      DFHMDF POS=(15,40),LENGTH=6,                                  *        
+               ATTRB=NUM,HILIGHT=UNDERLINE,                            *        
+               VALIDN=MUSTFILL,COLOR=DEFAULT                                    
+         DFHMDF POS=(15,47),LENGTH=1,                                  *        
+               ATTRB=(ASKIP,NORM),HILIGHT=OFF,COLOR=GREEN                       
+         DFHMDF POS=(17,24),LENGTH=9,INITIAL='and press'                        
+         DFHMDF POS=(17,34),LENGTH=5,INITIAL='Enter',COLOR=NEUTRAL              
+                                                                                
+MSG      DFHMDF POS=(21,10),LENGTH=31,                                 *        
+               INITIAL='Press CLEAR to exit this screen',COLOR=NEUTRAL          
+         DFHMSD TYPE=FINAL                                                      
+         END                                                                    

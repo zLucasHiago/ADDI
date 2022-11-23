@@ -1,0 +1,21 @@
+      *****************************************************************         
+      *                                                               *         
+      * Licensed Materials - Property of IBM                          *         
+      *                                                               *         
+      * JKEBKCOM.cpy                                                  *         
+      *                                                               *         
+      * ) Copyright IBM Corporation 2012                              *         
+      * U.S. Government Users Restricted Rights:                      *         
+      *      Use, duplication or disclosure                           *         
+      *      restricted by GSA ADP Schedule Corp.                     *         
+      *                                                               *         
+      *****************************************************************         
+      *                                                                         
+      * INPUT                                                                   
+           03 JKEMAIN-USER-NAME            PIC X(8).                            
+           03 JKEMAIN-USER-PWD             PIC X(8).                            
+           03 JKEMAIN-OPTION               PIC X.                               
+      * OUTPUT                                                                  
+           03 JKEPARM-RETURN-ERROR.                                             
+              05 JKEPARM-RETURN-ERROR-RC   PIC 99.                              
+              05 JKEPARM-RETURN-ERROR-TEXT PIC X(39).                           

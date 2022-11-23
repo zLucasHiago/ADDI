@@ -1,0 +1,28 @@
+      *****************************************************************         
+      *                                                               *         
+      * Licensed Materials - Property of IBM                          *         
+      *                                                               *         
+      * JKENBRPM.cpy                                                  *         
+      *                                                               *         
+      * ) Copyright IBM Corporation 2012                              *         
+      * U.S. Government Users Restricted Rights:                      *         
+      *      Use, duplication or disclosure                           *         
+      *      restricted by GSA ADP Schedule Corp.                     *         
+      *                                                               *         
+      *****************************************************************         
+                                                                                
+       01  JKE-NUMBER-VALIDATION.                                               
+      * INPUT                                                                   
+           03 JKEPARM-VALIDATE-DATA     PIC X(13).                              
+           03 JKEPARM-MAX-LENGTH        PIC 99.                                 
+           03 JKEPARM-RULE-FLAG         PIC 9.                                  
+              88 JKEPARM-RULE-FLAG-NONE   VALUE 0.                              
+              88 JKEPARM-RULE-FLAG-YEARS  VALUE 1.                              
+              88 JKEPARM-RULE-FLAG-AMOUNT VALUE 2.                              
+      * OUTPUT                                                                  
+           03 JKEPARM-NUMBER            PIC 9(13).                              
+           03 JKEPARM-DECIMAL           PIC V9(13).                             
+           03 JKEPARM-BINARY-NUMBER     PIC 9(9)V99 COMP.                       
+           03 JKEPARM-RETURN-ERROR.                                             
+              05 JKEPARM-RETURN-ERROR-RC   PIC 99.                              
+              05 JKEPARM-RETURN-ERROR-TEXT PIC X(80).                           

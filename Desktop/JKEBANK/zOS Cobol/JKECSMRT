@@ -1,0 +1,74 @@
+   CBL NUMPROC(MIG),FLAG(I,W),RENT                                              
+      *****************************************************************         
+      * Licensed Materials - Property of IBM                          *         
+      *                                                               *         
+      * JKECSMRT.cbl                                                  *         
+      *                                                               *         
+      * B) Copyright IBM Corporation 2012                              *        
+      * U.S. Government Users Restricted Rights:  Use, duplication    *         
+      * or disclosure                                                 *         
+      * restricted by GSA ADP Schedule Contract with IBM Corp.        *         
+      *                                                               *         
+      *                                                               *         
+      *****************************************************************         
+       ID DIVISION.                                                             
+       PROGRAM-ID. JKECSMRT.                                                    
+      *    THIS PROGRAM CALCULATES A MORTGAGE PAYMENT GIVEN A                   
+      *    LOAN AMOUNT, LOAN TERM, AND LOAN RATE. IT IS EXPOSED                 
+      *    AS A SERVICE ALSO.                                                   
+      *                                                                         
+      *    THIS PROGRAM IS INVOKED VIA A CICS LINK STATMENT                     
+      *    AND DYNAMICALLY CALLS THE ACTUAL PROGRAM                             
+      *                                                                         
+      *    (C) 2008 IBM JIM HILDNER.                                            
+       ENVIRONMENT DIVISION.                                                    
+       CONFIGURATION SECTION.                                                   
+       SOURCE-COMPUTER. FLEX-ES.                                                
+       OBJECT-COMPUTER. FLEX-ES.                                                
+       DATA DIVISION.                                                           
+       WORKING-STORAGE SECTION.                                                 
+      *                                                                         
+       01  WS-CALLED-PROGRAM    PIC X(8).                                       
+                                                                                
+       01  STATIC-CALLED-PROGRAMS.                                              
+           03 STATIC-CALLED-PROGRAM-TABLE.                                      
+              05 FILLER            PIC X(8) VALUE 'JKEMPMT'.                    
+              05 FILLER            PIC X(8) VALUE 'NOT VLD'.                    
+              05 FILLER            PIC X(8) VALUE ' '.                          
+           03 CALLED-PROGRAM-TABLE                                              
+                        REDEFINES STATIC-CALLED-PROGRAM-TABLE                   
+                        OCCURS 3 TIMES.                                         
+              05 CALLED-PROGRAM-NAME PIC X(8).                                  
+                                                                                
+       COPY JKEPDATA.                                                           
+                                                                                
+       LINKAGE SECTION.                                                         
+      *                                                                         
+       01 DFHCOMMAREA.                                                          
+       COPY JKEMTCOM.                                                           
+                                                                                
+       PROCEDURE DIVISION USING DFHCOMMAREA.                                    
+      *                                                                         
+       A000-MAINLINE.                                                           
+           MOVE JKEPCOM-PRINCIPLE-DATA  TO JKEPDATA-PRINCIPLE-DATA.             
+           MOVE JKEPCOM-NUMBER-OF-YEARS TO JKEPDATA-NUMBER-OF-YEARS.            
+           MOVE 'Y'                     TO JKEPDATA-YEAR-MONTH-IND.             
+           MOVE JKEPCOM-QUOTED-INTEREST-RATE                                    
+                                        TO                                      
+                                   JKEPDATA-QUOTED-INTEREST-RATE.               
+           MOVE CALLED-PROGRAM-NAME(1)  TO WS-CALLED-PROGRAM.                   
+           MOVE SPACES                  TO JKEPDATA-RETURN-ERROR.               
+           CALL 'JKEMPMT' USING JKEPDATA.                                       
+      *    CALL WS-CALLED-PROGRAM USING JKEPDATA.                               
+                                                                                
+           MOVE JKEPDATA-RETURN-ERROR   TO JKEPCOM-ERRMSG.                      
+           IF JKEPDATA-RETURN-ERROR = SPACES                                    
+              MOVE ZERO TO JKEPCOM-PROGRAM-RETCODE                              
+              MOVE JKEPDATA-RETURN-MONTH-PAYMENT                                
+                        TO JKEPCOM-RETURN-MONTH-PAYMENT                         
+           ELSE                                                                 
+              MOVE 8 TO JKEPCOM-PROGRAM-RETCODE                                 
+              MOVE 0 TO JKEPCOM-RETURN-MONTH-PAYMENT                            
+           END-IF.                                                              
+           GOBACK                                                               
+           .                                                                    
